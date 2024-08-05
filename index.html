@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="number"], input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .password {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label>
+            Length:
+            <input type="number" id="length" value="12" min="1" max="100">
+        </label>
+        <label>
+            <input type="checkbox" id="uppercase"> Include Uppercase
+        </label>
+        <label>
+            <input type="checkbox" id="numbers"> Include Numbers
+        </label>
+        <label>
+            <input type="checkbox" id="special"> Include Special Characters
+        </label>
+        <button id="generate">Generate Password</button>
+        <div class="password" id="password"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#generate').click(function() {
+                var length = parseInt($('#length').val());
+                var includeUppercase = $('#uppercase').is(':checked');
+                var includeNumbers = $('#numbers').is(':checked');
+                var includeSpecial = $('#special').is(':checked');
+
+                var lowerChars = 'abcdefghijklmnopqrstuvwxyz';
+                var upperChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                var numberChars = '0123456789';
+                var specialChars = '!@#$%^&*()_+[]{}|;:,.<>?';
+                
+                var chars = lowerChars;
+                if (includeUppercase) chars += upperChars;
+                if (includeNumbers) chars += numberChars;
+                if (includeSpecial) chars += specialChars;
+
+                var password = '';
+                for (var i = 0; i < length; i++) {
+                    var randomIndex = Math.floor(Math.random() * chars.length);
+                    password += chars[randomIndex];
+                }
+
+                $('#password').text(password);
+            });
+        });
+    </script>
+</body>
+</html>
